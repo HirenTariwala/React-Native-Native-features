@@ -4,9 +4,9 @@ import { isAndroid } from "../common/plateformChecker";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import PlaceList, { placeListOptions } from "../screens/PlaceList";
-import PlaceDetails from "../screens/PlaceDetails";
-import NewPlace from "../screens/NewPlace";
-import MapScren from "../screens/Map";
+import PlaceDetails, { placeDetailsOptions } from "../screens/PlaceDetails";
+import NewPlace, { newPlaceOptions } from "../screens/NewPlace";
+import MapScreen, { mapMyOptions } from "../screens/MapScreen";
 import Color from "../constants/Colors";
 
 /**
@@ -33,6 +33,8 @@ const defualtNavigationOption = {
 
 /**
  * Root navigation container
+ * screenOption is props where you can set your all screen defualt option
+ * options set for single screen
  */
 const RootNavigation = () => {
   return (
@@ -43,9 +45,21 @@ const RootNavigation = () => {
           component={PlaceList}
           options={placeListOptions}
         />
-        <Stack.Screen name="placeDetails" component={PlaceDetails} />
-        <Stack.Screen name="newPlace" component={NewPlace} />
-        <Stack.Screen name="map" component={MapScren} />
+        <Stack.Screen
+          name="mapScreen"
+          component={MapScreen}
+          options={mapMyOptions}
+        />
+        <Stack.Screen
+          name="placeDetails"
+          component={PlaceDetails}
+          options={placeDetailsOptions}
+        />
+        <Stack.Screen
+          name="newPlace"
+          component={NewPlace}
+          options={newPlaceOptions}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

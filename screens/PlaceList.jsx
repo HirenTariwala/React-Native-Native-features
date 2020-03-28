@@ -1,14 +1,42 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButtons";
 import { isAndroid } from "../common/plateformChecker";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllPlacesAction } from "../store/actions/placeAction";
+import PlaceItem from "../components/placeItem";
 
-const PlaceList = () => {
+const PlaceList = props => {
+  /**
+   * Placelist
+   */
+  const placeList = useSelector(state => state.placeReducer.placeList);
+
+  /**
+   * Action dispatcher
+   */
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllPlacesAction());
+  }, []);
+
   return (
-    <View>
-      <Text>PlaceList</Text>
-    </View>
+    <FlatList
+      data={placeList}
+      keyExtractor={place => place.id.toString()}
+      renderItem={place => (
+        <PlaceItem
+          {...place.item}
+          onSelect={() =>
+            props.navigation.navigate("placeDetails", {
+              place: place.item
+            })
+          }
+        />
+      )}
+    />
   );
 };
 
